@@ -1,0 +1,223 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <style>
+    @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;700&display=swap');
+
+    body {
+      background-color: #F7F8FA;
+      font-family: 'Inter', Arial, sans-serif;
+      margin: 0;
+      padding: 0;
+    }
+
+    .container {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      flex-direction: column;
+      height: 100vh;
+      padding: 0 16px;
+      max-width: 720px;
+      margin: 0 auto;
+    }
+
+    h2 {
+      font-size: 40px; /* Updated */
+      font-weight: 500; /* Updated */
+      font-family: 'Inter', Arial, sans-serif; /* Updated */
+      line-height: 48px; /* Updated */
+      margin-bottom: 4px;
+      text-align: center;
+      max-width: 100%;
+    }
+
+    .card {
+      border: none;
+      padding: 24px;
+      border-radius: 12px;
+      text-align: center;
+      max-width: 100%;
+      background-color: #FFF;
+    }
+
+    .value {
+      display: flex;
+      justify-content: space-between;
+      margin-bottom: 24px;
+    }
+
+    .value p {
+      flex: 1;
+      margin: 0;
+      font-size: 14px; /* Updated font-size from 12px to 14px */
+      line-height: 24px; /* Updated line-height from 18px to 24px */
+      margin-bottom: 4px; /* Added margin-bottom to create 4px gap between values */
+    }
+
+    /* Updated style for input group */
+    .input-group {
+      margin-bottom: 24px; /* Updated margin-bottom from 16px to 24px */
+    }
+
+    .input-group label {
+      display: block;
+      text-align: left;
+      font-size: 14px; /* Updated font-size from 12px to 14px */
+      line-height: 24px; /* Updated line-height from 18px to 24px */
+      font-weight: 500; /* Updated font-weight to Medium (500) */
+      margin-bottom: 4px; /* Added margin-bottom to create 4px gap between label and input */
+    }
+
+    .input-group input {
+      border: 1px solid #E0E1E4;
+      height: 40px;
+      width: 100%;
+      border-radius: 24px;
+      padding: 8px 16px;
+      box-sizing: border-box;
+    }
+
+    .input-group input:focus {
+        border-color: #0077FF;
+        outline: none;
+    }
+    .calculate-btn {
+      border: none;
+      height: 40px;
+      font-size: 14px;
+      line-height: 24px;
+      background-color: #0077FF;
+      color: #FFF;
+      padding: 8px 16px;
+      margin-bottom: 24px;
+      border-radius: 24px;
+      width: 100%;
+    }
+
+    /* Added style for subtitle */
+    .subtitle {
+      font-family: 'Inter', Arial, sans-serif;
+      font-weight: 400;
+      font-size: 14px;
+      line-height: 24px;
+      color: #62626D;
+      text-align: center;
+      margin: 0;
+      margin-bottom: 40px; /* Add a 40px space beneath the subtitle */
+      max-width: 600px; /* Added max-width */
+      width: 100%; /* Ensure it takes up full width up to max-width */
+    }
+
+    .disclaimer {
+      margin-top: 0px;
+      font-size: 10px;
+      line-height: 16px;
+      color: #8D8D94;
+    }
+
+    /* Additional CSS */
+    hr {
+      border: none;
+      height: 1px;
+      background-color: #E0E1E4;
+      margin: 24px 0;
+    }
+
+    @media (min-width: 600px) {
+      .form-row {
+        display: flex;
+        justify-content: space-between;
+        align-items: flex-start;
+      }
+
+      .form-row .input-group {
+        flex: 1;
+        margin-right: 8px;
+      }
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <h2>Simulate price of <span style="color: #0077FF">$SPOT</span></h2>
+    <!-- Added subtitle -->
+    <p class="subtitle">This calculator tries to simulate the price based on standard factors in crypto and how other projects has performed with these numbers. Be aware that it may not be accurate.</p>
+  
+    <div class="card">
+      <div class="value">
+        <p>
+          <span style="font-size: 14px; line-height: 20px;">Current Value</span><br>
+          <span style="font-size: 20px; line-height: 24px; font-weight: 500;">$0.025</span>
+        </p>
+        <p id="multiplier">
+          <span style="font-size: 14px; line-height: 20px;">Multiplier</span><br>
+          <span style="font-size: 20px; line-height: 24px; font-weight: 500; color: #0077FF;">0X</span>
+        </p>
+        <p id="result">
+          <span style="font-size: 14px; line-height: 20px;">Simulated Value</span><br>
+          <span style="font-size: 20px; line-height: 24px; font-weight: 500; color: #0077FF;">$0</span>
+        </p>
+      </div>
+    
+      <hr>
+
+     <form id="calcForm">
+        <div class="form-row">
+          <div class="input-group">
+            <label for="dailyVolume">Daily Volume</label>
+            <input type="text" id="dailyVolume" name="dailyVolume" placeholder="Enter a dollar value">
+          </div>
+          <div class="input-group">
+            <label for="stakedSpotPercent">Total Staked $SPOT (%)</label>
+            <input type="number" id="stakedSpotPercent" name="stakedSpotPercent" min="0" max="100" placeholder="Enter a precentage">
+          </div>
+        </div>
+        <input type="button" value="Calculate" onclick="calculateFDV()" class="calculate-btn">
+      </form>
+      <div class="disclaimer">
+        DISCLAIMER: This calculator is designed solely for the purpose of estimating a fair market value of $SPOT based on a hypothetical scenario. It is important to note that this calculator should not be used as a definitive tool for making investment decisions. In reality, numerous factors come into play, and there is no guarantee that it will yield consistent returns beyond a specific timeframe. Furthermore, Defispot retains the right to withdraw rewards at any given moment. Please exercise caution and consult with a financial advisor before making any investment choices.
+      </div>
+    </div>
+  </div>
+
+<script>
+  // Function to remove non-numeric characters from the input value
+  function formatInputValue(value) {
+    return value.replace(/,/g, '');
+  }
+
+  // Function to format output value with comma separators
+  function formatOutputValue(value) {
+    return new Intl.NumberFormat().format(value);
+  }
+
+  function calculateFDV() {
+    // Get inputs
+    const dailyVolumeStr = document.getElementById('dailyVolume').value;
+    const dailyVolume = parseFloat(formatInputValue(dailyVolumeStr));
+    const stakedSpotPercent = parseFloat(document.getElementById('stakedSpotPercent').value);
+    const currentValue = 0.025;
+
+    // Constants
+    const totalSpotTokens = 1000000000;
+    
+    // Calculations
+    const dailyRevenue = dailyVolume / 1000 * 3;
+    const annualRevenue = dailyRevenue * 365;
+    const stakedSpotTokens = totalSpotTokens * (stakedSpotPercent / 100);
+    const usdcRevenuePerSpotAnnually = annualRevenue / stakedSpotTokens;
+    const spotFDVPerTokenAnnually = usdcRevenuePerSpotAnnually * 20;
+
+    // Calculate multiplier
+    const multiplier = spotFDVPerTokenAnnually / currentValue;
+
+    // Display results
+    document.getElementById('result').innerHTML = '<span style="font-size: 14px; line-height: 20px;">Simulated Value</span><br><span style="font-size: 20px; line-height: 24px; font-weight: 500; color: #0077FF;">$' + formatOutputValue(spotFDVPerTokenAnnually.toFixed(2)) + '</span>';
+    document.getElementById('multiplier').innerHTML = '<span style="font-size: 14px; line-height: 20px;">Multiplier</span><br><span style="font-size: 20px; line-height: 24px; font-weight: 500; color: #0077FF;">' + formatOutputValue(multiplier.toFixed(2)) + 'X</span>';
+  }
+</script>
+
+</body>
+</html>
